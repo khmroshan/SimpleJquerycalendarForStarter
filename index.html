@@ -28,11 +28,13 @@
 		.month .prev {
 			float: left;
 			padding-top: 10px;
+			cursor: pointer;
 		}
 
 		.month .next {
 			float: right;
 			padding-top: 10px;
+			cursor: pointer;
 		}
 
 		.weekdays {
@@ -68,6 +70,10 @@
 			padding: 5px;
 			background: #1abc9c;
 			color: white !important
+		}
+
+		.sa{
+			color:red !important;
 		}
 
 		/* Add media queries for smaller screens */
@@ -124,11 +130,11 @@
 
 		function printDate(year, month){
 
-			var datee = new Date( parseInt(year),   parseInt(month));
+			
 
-			var firstDay = new Date(datee.getFullYear(), datee.getMonth());
+			var firstDay = new Date(parseInt(year), parseInt(month));
 
-			var lastDay = new Date(datee.getFullYear(), datee.getMonth()+1, 0);
+			var lastDay = new Date( parseInt(month),  parseInt(month)+1, 0);
 
 			i=0;
 			
@@ -137,14 +143,26 @@
 			k=lastDay.getDate();
 			
 			$('.days > li').each(function(){
-			
+
 				$(this).text("");
 
 				if(i==firstDay.getDay()){
 
 					if(j<=k){
 
-						$(this).text(j);
+						var myd = new Date(parseInt(year), parseInt(month), j);
+
+						if(myd.getDay()==6){
+
+							$(this).addClass('sa').text(j);
+
+						}
+
+						else{
+
+							$(this).text(j);
+
+						}
 
 						j++;
 					}
@@ -165,17 +183,17 @@
 			newyear=0;
 			
 			if(parseInt(month)==0){
-			
+
 				newmonth=11;
-			
+
 				newyear=parseInt(year)-1;
-			
+
 			}else{
-			
+
 				newmonth=parseInt(month)-1;
-			
+
 				newyear=parseInt(year);
-			
+
 			}
 			
 			var prevdate=new Date(newyear, newmonth);
@@ -191,15 +209,15 @@
 			newyear=0;
 			
 			if(parseInt(month)==11){
-			
+
 				newmonth=0;
-			
+
 				newyear=parseInt(year)+1;
-			
+
 			}else{
-			
+
 				newmonth=parseInt(month)+1;
-			
+
 				newyear=parseInt(year);
 			}
 			
@@ -232,7 +250,7 @@
 		<li>WE</li>
 		<li>TH</li>
 		<li>FR</li>
-		<li>SA</li>
+		<li class="sa">SA</li>
 	</ul>
 
 	<ul class="days">  
