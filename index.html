@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<style>
+		* {box-sizing:border-box;}
+		ul {list-style-type: none;}
+		body {font-family: Verdana,sans-serif;}
+
+		.month {
+			padding: 70px 25px;
+			width: 100%;
+			background: #1abc9c;
+		}
+
+		.month ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		.month ul li {
+			color: white;
+			font-size: 20px;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+		}
+
+		.month .prev {
+			float: left;
+			padding-top: 10px;
+		}
+
+		.month .next {
+			float: right;
+			padding-top: 10px;
+		}
+
+		.weekdays {
+			margin: 0;
+			padding: 10px 0;
+			background-color: #ddd;
+		}
+
+		.weekdays li {
+			display: inline-block;
+			width: 13.6%;
+			color: #666;
+			text-align: center;
+		}
+
+		.days {
+			padding: 10px 0;
+			background: #eee;
+			margin: 0;
+		}
+
+		.days li {
+			list-style-type: none;
+			display: inline-block;
+			width: 13.6%;
+			text-align: center;
+			margin-bottom: 5px;
+			font-size:12px;
+			color: #777;
+		}
+
+		.days li .active {
+			padding: 5px;
+			background: #1abc9c;
+			color: white !important
+		}
+
+		/* Add media queries for smaller screens */
+		@media screen and (max-width:720px) {
+			.weekdays li, .days li {width: 13.1%;}
+		}
+
+		@media screen and (max-width: 420px) {
+			.weekdays li, .days li {width: 12.5%;}
+			.days li .active {padding: 2px;}
+		}
+
+		@media screen and (max-width: 290px) {
+			.weekdays li, .days li {width: 12.2%;}
+		}
+	</style>
+	<script type="text/javascript">
+
+		var mymonths= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+		$(document).ready(function(){
+
+			var today = new Date();
+
+			$('.year-month').attr('month',  today.getMonth()).attr('year',  today.getFullYear()).find('p').text(mymonths[ today.getMonth()]);
+
+			$('.year-month>span').text( today.getFullYear());
+
+			printDate(  today.getFullYear(),  today.getMonth());
+
+			$('.next').click(function(){
+
+				nextdate( $('.year-month ').attr('year'), $('.year-month').attr('month'), getResponse);
+
+			});
+
+			$('.prev').click(function(){
+
+				prevdate( $('.year-month').attr('year'), $('.year-month').attr('month'), getResponse);
+			});
+
+
+		});
+
+
+		function getResponse(date){
+
+			$('.year-month').attr('month', date.getMonth()).attr('year', date.getFullYear()).find('p').text(mymonths[date.getMonth()]);
+
+			$('.year-month >span').text(date.getFullYear());
+
+			printDate( date.getFullYear(),  date.getMonth());
+		}
+
+		function printDate(year, month){
+
+			var datee = new Date( parseInt(year),   parseInt(month));
+
+			var firstDay = new Date(datee.getFullYear(), datee.getMonth());
+
+			var lastDay = new Date(datee.getFullYear(), datee.getMonth()+1, 0);
+
+			i=0;
+			
+			j=1;
+			
+			k=lastDay.getDate();
+			
+			$('.days > li').each(function(){
+			
+				$(this).text("");
+
+				if(i==firstDay.getDay()){
+
+					if(j<=k){
+
+						$(this).text(j);
+
+						j++;
+					}
+
+				}else{
+					i++;
+				}
+
+
+			});
+		}
+
+
+		function prevdate(year, month, getResponse){
+
+			newmonth=0;
+			
+			newyear=0;
+			
+			if(parseInt(month)==0){
+			
+				newmonth=11;
+			
+				newyear=parseInt(year)-1;
+			
+			}else{
+			
+				newmonth=parseInt(month)-1;
+			
+				newyear=parseInt(year);
+			
+			}
+			
+			var prevdate=new Date(newyear, newmonth);
+
+			getResponse(prevdate);
+
+		}
+
+		function nextdate(year, month, getResponse){
+
+			newmonth=0;
+			
+			newyear=0;
+			
+			if(parseInt(month)==11){
+			
+				newmonth=0;
+			
+				newyear=parseInt(year)+1;
+			
+			}else{
+			
+				newmonth=parseInt(month)+1;
+			
+				newyear=parseInt(year);
+			}
+			
+			var nextdate=new Date(newyear, newmonth);
+
+			getResponse(nextdate);
+		}
+
+	</script>
+</head>
+<body>
+
+	
+
+	<div class="month">      
+		<ul>
+			<li class="prev"><</li>
+			<li class="next">></li>
+			<li style="text-align:center" class="year-month" >
+				<p></p>
+				<span style="font-size:18px"></span>
+			</li>
+		</ul>
+	</div>
+
+	<ul class="weekdays">
+		<li>SU</li>
+		<li>MO</li>
+		<li>TU</li>
+		<li>WE</li>
+		<li>TH</li>
+		<li>FR</li>
+		<li>SA</li>
+	</ul>
+
+	<ul class="days">  
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+
+</body>
+</html>
